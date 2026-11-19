@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>AI Quote Builder</title>
+<meta name="description" content="Free quote builder for Australian sole traders. Line items, GST, deposit, inclusions and exclusions, plus a ready-to-paste AI prompt. Runs in your browser.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the form</a>
+<header class="site"><div class="wrap">
+  <h1>AI <span>Quote</span> Builder</h1>
+  <p>Build a clear quote with GST and a deposit in a few minutes. Everything stays in your browser.</p>
+</div></header>
+
+<main id="main" class="wrap">
+  <div class="grid">
+    <form class="card" id="quote-form" novalidate>
+      <h2>Your business</h2>
+      <div class="row two">
+        <div><label for="businessName">Business name</label><input id="businessName" autocomplete="organization"></div>
+        <div><label for="abn">ABN <span class="hint">Optional</span></label><input id="abn" inputmode="numeric"></div>
+      </div>
+      <label for="businessContact">Contact line <span class="hint">Phone, email or website</span></label>
+      <input id="businessContact">
+      <label class="check"><input type="checkbox" id="gstRegistered"> I'm registered for GST (adds 10%)</label>
+
+      <h2 class="spaced">The job</h2>
+      <div class="row two">
+        <div><label for="clientName">Client name</label><input id="clientName"></div>
+        <div><label for="quoteNumber">Quote number</label><input id="quoteNumber" placeholder="Q-001"></div>
+      </div>
+      <div class="row two">
+        <div><label for="quoteDate">Quote date</label><input id="quoteDate" type="date"></div>
+        <div><label for="validDays">Valid for (days)</label><input id="validDays" type="number" min="1" value="30"></div>
+      </div>
+      <label for="jobSummary">Job summary</label>
+      <textarea id="jobSummary" placeholder="e.g. Full clean of a 3-bedroom house before the tenants move out."></textarea>
+
+      <h3>Line items <span class="hint">Prices before GST</span></h3>
+      <div id="items"></div>
+      <button type="button" id="add-item">+ Add a line</button>
+
+      <h3>Scope</h3>
+      <label for="inclusions">Included <span class="hint">One per line</span></label>
+      <textarea id="inclusions"></textarea>
+      <label for="assumptions">Assumptions <span class="hint">One per line</span></label>
+      <textarea id="assumptions" placeholder="e.g. Access to water and power on site"></textarea>
+      <label for="exclusions">Not included <span class="hint">One per line</span></label>
+      <textarea id="exclusions"></textarea>
+
+      <h3>Payment</h3>
+      <div class="row two">
+        <div><label for="depositPercent">Deposit to book (%)</label><input id="depositPercent" type="number" min="0" max="100" value="0"></div>
+        <div><label for="paymentTerms">Payment terms</label><input id="paymentTerms" placeholder="e.g. Balance due within 7 days"></div>
+      </div>
+    </form>
+
+    <section class="card" aria-labelledby="out-title">
+      <h2 id="out-title">Your quote</h2>
+      <div class="stats" aria-live="polite">
+        <div class="stat"><b id="s-sub">$0.00</b><span>Subtotal</span></div>
+        <div class="stat"><b id="s-gst">$0.00</b><span>GST</span></div>
+        <div class="stat"><b id="s-total">$0.00</b><span>Total</span></div>
+        <div class="stat"><b id="s-dep">$0.00</b><span>Deposit</span></div>
+      </div>
+      <p class="error" id="errors" role="alert"></p>
+      <pre class="output" id="output"></pre>
+      <div class="buttons no-print">
+        <button class="primary" type="button" id="copy">Copy quote</button>
+        <button type="button" id="download">Download .txt</button>
+        <button type="button" id="print">Print / save PDF</button>
+        <button type="button" id="copy-ai">Copy AI polish prompt</button>
+      </div>
+      <p class="status" id="status" role="status"></p>
+      <p class="hint no-print">The AI prompt asks an assistant (ChatGPT, Claude, Gemini) to tidy your wording without touching prices. This app doesn't call any AI itself.</p>
+    </section>
+  </div>
+</main>
+
+<footer class="site"><div class="wrap">
+  Free tool by <a href="https://thesoloserviceprovider.com.au/">The Solo Service Provider</a>. Not legal, tax or financial advice: check GST and invoice rules with the ATO or your accountant.
+  · <a href="https://github.com/joshuawayzwright/ai-quote-builder">Source</a>
+</div></footer>
+<script src="lib.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
